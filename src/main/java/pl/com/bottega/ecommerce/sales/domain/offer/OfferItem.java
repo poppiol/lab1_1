@@ -18,76 +18,22 @@ import java.util.Objects;
 
 public class OfferItem {
 
+    ProductData productData;
+    Discount discount;
     private int quantity;
-
     private BigDecimal totalCost;
 
-
-
-    public OfferItem(String productId, BigDecimal productPrice, String productName, Date productSnapshotDate, String productType,
-            int quantity) {
-        this(productId, productPrice, productName, productSnapshotDate, productType, quantity, null, null);
-    }
-
-    public OfferItem(String productId, BigDecimal productPrice, String productName, Date productSnapshotDate, String productType,
-            int quantity, BigDecimal discount, String discountCause) {
-        this.productId = productId;
-        this.productPrice = productPrice;
-        this.productName = productName;
-        this.productSnapshotDate = productSnapshotDate;
-        this.productType = productType;
-
+    public OfferItem(ProductData productData, int quantity) {
+        this.productData = productData;
         this.quantity = quantity;
+    }
+
+    public OfferItem(ProductData productData, Discount discount, int quantity) {
+        this.productData = productData;
         this.discount = discount;
-        this.discountCause = discountCause;
-
-        BigDecimal discountValue = new BigDecimal(0);
-        if (discount != null) {
-            discountValue = discountValue.subtract(discount);
-        }
-
-        this.totalCost = productPrice.multiply(new BigDecimal(quantity))
-                                     .subtract(discountValue);
-    }
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public BigDecimal getProductPrice() {
-        return productPrice;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public Date getProductSnapshotDate() {
-        return productSnapshotDate;
-    }
-
-    public String getProductType() {
-        return productType;
-    }
-
-    public BigDecimal getTotalCost() {
-        return totalCost;
-    }
-
-    public String getTotalCostCurrency() {
-        return currency;
-    }
-
-    public BigDecimal getDiscount() {
-        return discount;
-    }
-
-    public String getDiscountCause() {
-        return discountCause;
-    }
-
-    public int getQuantity() {
-        return quantity;
+        this.quantity = quantity;
+        this.totalCost = productData.getPrice().getValue().multiply(new BigDecimal(quantity))
+                .subtract(discount.getDiscount().getValue());
     }
 
     @Override
