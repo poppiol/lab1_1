@@ -18,8 +18,8 @@ import java.util.Objects;
 
 public class OfferItem {
 
-    ProductData productData;
-    Discount discount;
+    private ProductData productData;
+    private Discount discount;
     private int quantity;
     private BigDecimal totalCost;
 
@@ -44,29 +44,29 @@ public class OfferItem {
      * @return
      */
     public boolean sameAs(OfferItem other, double delta) {
-        if (productPrice == null) {
-            if (other.productPrice != null) {
+        if (productData.getPrice().getValue() == null) {
+            if (other.productData.getPrice().getValue() != null) {
                 return false;
             }
-        } else if (!productPrice.equals(other.productPrice)) {
+        } else if (!productData.getPrice().getValue().equals(other.productData.getPrice().getValue())) {
             return false;
         }
-        if (productName == null) {
-            if (other.productName != null) {
+        if (productData.getName() == null) {
+            if (other.productData.getName() != null) {
                 return false;
             }
-        } else if (!productName.equals(other.productName)) {
+        } else if (!productData.getName().equals(other.productData.getName())) {
             return false;
         }
 
-        if (productId == null) {
-            if (other.productId != null) {
+        if (productData.getId() == null) {
+            if (other.productData.getId() != null) {
                 return false;
             }
-        } else if (!productId.equals(other.productId)) {
+        } else if (!productData.getId().equals(other.productData.getId())) {
             return false;
         }
-        if (productType != other.productType) {
+        if (!productData.getType().equals(other.productData.getType())) {
             return false;
         }
 
@@ -88,6 +88,10 @@ public class OfferItem {
         BigDecimal acceptableDelta = max.multiply(BigDecimal.valueOf(delta / 100));
 
         return acceptableDelta.compareTo(difference) > 0;
+    }
+
+    public ProductData getProductData() {
+        return productData;
     }
 
 }
