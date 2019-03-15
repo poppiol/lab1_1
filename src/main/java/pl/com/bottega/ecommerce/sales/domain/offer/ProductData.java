@@ -2,6 +2,7 @@ package pl.com.bottega.ecommerce.sales.domain.offer;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 
 public class ProductData {
     private String id;
@@ -40,5 +41,22 @@ public class ProductData {
 
     public String getType() {
         return type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductData that = (ProductData) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(price, that.price) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(snapshotDate, that.snapshotDate) &&
+                Objects.equals(type, that.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, price, name, snapshotDate, type);
     }
 }
