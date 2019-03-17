@@ -12,6 +12,14 @@ public class Money {
         this.value = value;
     }
 
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public void setValue(BigDecimal value) {
+        this.value = value;
+    }
+
     public String getCurrency() {
         return currency;
     }

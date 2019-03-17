@@ -21,7 +21,7 @@ public class OfferItem {
     private ProductData productData;
     private Discount discount;
     private int quantity;
-    private BigDecimal totalCost;
+    private Money totalCost;
 
     public OfferItem(ProductData productData, int quantity) {
         this.productData = productData;
@@ -32,15 +32,13 @@ public class OfferItem {
         this.productData = productData;
         this.discount = discount;
         this.quantity = quantity;
-        this.totalCost = productData.getPrice().getValue().multiply(new BigDecimal(quantity))
-                .subtract(discount.getDiscount().getValue());
+        this.totalCost.setValue(productData.getPrice().getValue().multiply(new BigDecimal(quantity))
+                .subtract(discount.getDiscount().getValue()));
     }
 
     /**
-     *
      * @param other
-     * @param delta
-     *            acceptable percentage difference
+     * @param delta acceptable percentage difference
      * @return
      */
     public boolean sameAs(OfferItem other, double delta) {
@@ -76,12 +74,12 @@ public class OfferItem {
 
         BigDecimal max;
         BigDecimal min;
-        if (totalCost.compareTo(other.totalCost) > 0) {
-            max = totalCost;
-            min = other.totalCost;
+        if (totalCost.getValue().compareTo(other.totalCost.getValue()) > 0) {
+            max = totalCost.getValue();
+            min = other.totalCost.getValue();
         } else {
-            max = other.totalCost;
-            min = totalCost;
+            max = other.totalCost.getValue();
+            min = totalCost.getValue();
         }
 
         BigDecimal difference = max.subtract(min);
